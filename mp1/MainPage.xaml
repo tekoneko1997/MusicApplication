@@ -1,0 +1,139 @@
+﻿<Page
+    x:Class="mp1.MainPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d" Background="Transparent" >
+
+    <!--画面のトップレベルのGridコントロール -->
+    <Grid Background="Transparent"
+        RequestedTheme="Light">
+
+        <!-- SplitViewコントロール -->
+        <SplitView x:Name="Splitter" DisplayMode="CompactOverlay"
+               CompactPaneLength="48" OpenPaneLength="200" 
+               IsPaneOpen="{Binding ElementName=ToggleButtonSplitView, 
+                            Path=IsChecked, Mode=TwoWay}"
+               PaneBackground="AliceBlue"
+               >
+
+            <!-- Paneプロパティにはメニューとなるコンテンツを入れる -->
+            <SplitView.Pane>
+                <Grid RequestedTheme="Light">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="*" />
+                        <RowDefinition Height="Auto" />
+                    </Grid.RowDefinitions>
+
+
+                    <!-- 上部のナビゲーションボタン -->
+                    <StackPanel>
+                        <ToggleButton x:Name="ToggleButtonSplitView"
+                                       FontFamily="{ThemeResource SymbolThemeFontFamily}"                           
+                                       Content="&#xE700;" Width="48" Height="48"
+                                       Background="AliceBlue" Checked="ToggleButtonSplitView_Checked" Unchecked="ToggleButtonSplitView_UnChecked"/>
+
+                        <!-- サーチボックス -->
+                        <AutoSuggestBox  x:Name="SearchBox" HorizontalAlignment="Left" Margin="10,10,10,10" Width="180"  QueryIcon="Find" Visibility="Collapsed" PlaceholderText="検索"/>
+                        <RadioButton x:Name="SearchButton"  Width="48"
+                                         Click="SearchButton_Checked"
+                                         Style="{StaticResource NoCheckedColorNavigationButtonStyle}"
+                                         Tag="&#xE11A;" Checked="SearchButton_Checked" />
+
+
+
+
+                        <!-- メニュー -->
+                        <RadioButton x:Name="RadioButton1"  Width="200"
+                                         Click="RadioButton1_Checked"
+                                         Style="{StaticResource NavigationButtonStyle}"
+                                         Tag="&#xE10F;" GroupName="Navi"  Content="マイミュージック"/>
+
+                        <RadioButton x:Name="RadioButton2" Width="200"
+                                         Click="RadioButton2_Checked"
+                                         Style="{StaticResource NavigationButtonStyle}"
+                                         Tag="&#xED5A;" GroupName="Navi" Content="最近再生した曲"/>
+
+                        <RadioButton x:Name="RadioButton3" Width="200"
+                                         Click="RadioButton3_Checked"
+                                         Style="{StaticResource NavigationButtonStyle}"
+                                         Tag="&#xE13D;" GroupName="Navi"  Content="再生中"/>
+
+
+                    </StackPanel>
+
+                    <ScrollViewer Name="NavigationMenu" Grid.Row="1" >
+                        <!-- 再生リスト -->
+                        <StackPanel x:Name="PlayListPanel">
+                            <Grid RequestedTheme="Light">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="*" />
+                                    <RowDefinition Height="*" />
+                                </Grid.RowDefinitions>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="*" />
+                                </Grid.ColumnDefinitions>
+
+                                <RadioButton x:Name="RadioButton4" Width="150" Grid.Column="0" Grid.Row="0" 
+                                         Click="RadioButton3_Checked"
+                                         Style="{StaticResource NavigationButtonStyle}"
+                                         Tag="&#xE13D;" GroupName="Navi"  Content="再生リスト"/>
+
+
+                                <RadioButton x:Name="NewPlayListButton"  Width="48" Grid.Column="0"  Grid.Row="1"
+                                         Click="SearchButton_Checked"
+                                         Style="{StaticResource NoCheckedColorNavigationButtonStyle}"
+                                         Tag="&#xE109;" Checked="NewPlayList_Checked" />
+
+
+                            </Grid>
+                        </StackPanel>
+                    </ScrollViewer>
+
+                    <!-- 下に表示されるメニュー -->
+                    <StackPanel Grid.Row="2 ">
+                        <Grid RequestedTheme="Light">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="*" />
+                                <RowDefinition Height="*" />
+                            </Grid.RowDefinitions>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto"/>
+                                <ColumnDefinition Width="*" />
+                            </Grid.ColumnDefinitions>
+
+                            <RadioButton x:Name="AboutButton" GroupName="Navi" Style="{StaticResource NavigationButtonStyle}" Grid.Column="0" Grid.Row="0" 
+                                 Tag="&#xE783;" Content="About" Width="150" x:Uid="AboutPane" Click="AboutButton_Click"/>
+                            <RadioButton x:Name="SettingsButton" GroupName="Navi" Style="{StaticResource NavigationButtonStyle}" Grid.Column="0" Grid.Row="1" 
+                                 Tag="&#xE713;"  Width="48" x:Uid="SettingsPane" Click="SettingsButton_Click"/>
+                        </Grid>
+                    </StackPanel>
+
+
+                </Grid>
+            </SplitView.Pane>
+
+
+
+            <!-- Contentプロパティにはメインのコンテンツを入れる -->
+            <SplitView.Content>
+                <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="133*" />
+                        <RowDefinition Height="407*"/>
+                    </Grid.RowDefinitions>
+                    <Frame Name="MainFrame" Grid.Row="1" Navigated="MainFrame_Navigated" Grid.RowSpan="2"></Frame>
+
+
+                </Grid>
+            </SplitView.Content>
+        </SplitView>
+
+
+    </Grid>
+
+</Page>
